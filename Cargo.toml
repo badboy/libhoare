@@ -5,8 +5,16 @@ authors = [ "nrc@ncameron.org" ]
 description = "Design by contract style assertions for Rust"
 repository = "https://github.com/nick29581/libhoare"
 readme = "readme.md"
+edition = "2018"
 
 [lib]
 name = "hoare"
-path = "libhoare/lib.rs"
-plugin = true
+path = "src/lib.rs"
+proc-macro = true
+
+[dependencies]
+syn = { version = "0.15.23", features = ["full", "fold"] }
+quote = "0.6.10"
+serde = "1.0.82"
+toml = "0.4"
+serde_derive = "1.0.82"
