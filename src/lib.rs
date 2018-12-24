@@ -87,7 +87,7 @@ pub fn hoare(args: TokenStream, input: TokenStream) -> TokenStream {
     let input = syn::parse_macro_input!(input as ItemFn);
 
     // Parse the list of variables the user wanted to print.
-    let args = args.to_string().replace(",", "\n");
+    let args = args.to_string().replace("\n", " ").replace(",", "\n");
     let mut args : Args = toml::from_str(&args).unwrap();
 
     let output = args.fold_item_fn(input);
