@@ -19,37 +19,20 @@ which was named after Tony).
 
 ## Using libhoare
 
-You can use libhoare with Cargo by adding 
+You can use libhoare with Cargo by adding
 
 ```
 [dependencies.hoare]
-git = "https://github.com/nick29581/libhoare.git"
+git = "https://github.com/badboy/libhoare.git"
+branch = "rust-2018"
 ```
 
 to your projects Cargo manifest.
 
-Otherwise, download this repo, build it (see build instructions below), make
-sure the path to the compiled libhoare is on your library path in some way (one
-way of doing this is to `export LD_LIBRARY_PATH=/path/to/libhoare/obj` before
-building).
-
-Then (whether or not you used Cargo), in your crate you will need the following
-boilerplate:
-
-```
-#![feature(plugin, custom_attribute)]
-
-#![plugin(hoare)]
-```
-
-Then you can use the macros as shown below.
-
-
 ## Examples:
 
 ```
-#[precond="x > 0"]
-#[postcond="result > 1"]
+#[hoare(precond="x > 0", postcond="result > 1")]
 fn foo(x: int) -> int {
     let y = 45 / x;
     y + 1
@@ -61,7 +44,7 @@ struct Bar {
     f2: int
 }
 
-#[invariant="x.f1 < x.f2"]
+#[hoare(invariant="x.f1 < x.f2")]
 fn baz(x: &mut Bar) {
     x.f1 += 10;
     x.f2 += 10;
@@ -94,15 +77,6 @@ a single file, `lib.rs`.
 
 The `test` directory contains unit tests for the library.
 
-The `eg` directory contains a few examples of how to use the library:
-
- * hello.rs is a very simple (hello world!) example of how to use an invariant
-(useful as a basic test case);
- * doc.rs contains the examples above, so we can check they compiler and run;
- * lexer.rs is a more realistic example of use - a simple (and certainly not
-industrial-strength) lexer for a very small language.
-
-
 ## Building
 
 To build libhoare from the top level of your checked out repo run
@@ -110,26 +84,6 @@ To build libhoare from the top level of your checked out repo run
 ```
 cargo build
 ```
-
-(if using cargo) or
-
-```
-$RUSTC ./libhoare/lib.rs
-```
-
-This will create libhoare.rs in the current directory, you might want to specify
-an output file using `-o`.
-
-To build the examples run `eg.sh` in the top level and to run the tests run `tests.sh`.
-Both of these assume that you have a sibling directory called `obj` and that you
-used
-
-```
-$RUSTC ./libhoare/lib.rs -o "../obj/libhoare.so"
-```
-
-to build libhoare. Examples are created in `../obj`
-
 
 ## TODO
 
