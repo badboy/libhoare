@@ -31,7 +31,7 @@ to your projects Cargo manifest.
 
 ## Examples:
 
-```
+```rust
 #[hoare(precond="x > 0", postcond="result > 1")]
 fn foo(x: int) -> int {
     let y = 45 / x;
